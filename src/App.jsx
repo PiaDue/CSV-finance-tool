@@ -1,36 +1,17 @@
-import { useState } from 'react'
-import './App.css'
+import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import './App.css'
+import FileInput from './components/FileInput';
+import { FileProvider } from './contexts/FileContext';
 
 function App() {
-  const [file, setFile] = useState(null);
-
-  const handleFileChange = (event) => {
-    const file = event.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setFile(reader.result);
-      };
-      reader.readAsText(file);
-    }
-  };
-
   return (
-    <>
-      <h1>Upload CSV File</h1>
-
-      <div className="card">
-        <input type="file" accept=".csv" onChange={handleFileChange} />
+    <FileProvider>
+      <div className="App">
+        <FileInput />
       </div>
-      {file && (
-        <div>
-          <h2>File Content:</h2>
-          <pre>{file}</pre>
-        </div>
-      )}
-    </>
-  )
+    </FileProvider>
+  );
 }
 
-export default App 
+export default App;
