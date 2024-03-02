@@ -3,21 +3,34 @@ import './App.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [file, setFile] = useState(null);
+
+  const handleFileChange = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setFile(reader.result);
+      };
+      reader.readAsText(file);
+    }
+  };
 
   return (
     <>
-      <h1>Vite + React</h1>
+      <h1>Upload CSV File</h1>
+
       <div className="card">
-        <button className='btn btn-primary' onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
+        <input type="file" accept=".csv" onChange={handleFileChange} />
       </div>
+      {file && (
+        <div>
+          <h2>File Content:</h2>
+          <pre>{file}</pre>
+        </div>
+      )}
     </>
   )
 }
 
-export default App
+export default App 
