@@ -3,23 +3,28 @@ const FileContext = createContext();
 export const useFile = () => useContext(FileContext);
 
 export const FileProvider = ({ children }) => {
-
-    const [fileData, setFileData] = useState(null);
     const [parsedData, setParsedData] = useState(null);
+    const [header, setHeader] = useState([String]);
+    const [showOverview, setShowOverview] = useState(false);
+    const [transactions, setTransactions] = useState([]);
 
     const handleFileChange = (file) => {
         if (file) {
             const reader = new FileReader();
             reader.onload = (e) => {
                 const fileContent = e.target.result;
-                setFileData(fileContent);
-
                 const parsedData = parseCSV(fileContent);
                 setParsedData(parsedData);
             };
             reader.readAsText(file, 'ISO-8859-1');
+            changeShowOverview(false);
         }
     };
+
+    const changeShowOverview = (bool) => {
+        setShowOverview(bool);
+    }
+
 
     const parseCSV = (str) => {
         const arr = []; //TODO: use a type to save the data in objects
@@ -57,10 +62,20 @@ export const FileProvider = ({ children }) => {
         return arr;
     }
 
+    const analyzeData = (skippedLines) => {
+        console.log('Header');
+        setHeader(parsedData[skippedLines]);
+        console.log(parsedData[skippedLines]);
+
+        console.log('Transactions');
+        console.log(parsedData.slice(skippedLines));
+        changeShowOverview(true);
+    }
+
 
 
     return (
-        <FileContext.Provider value={{ fileData, handleFileChange, parsedData }}>
+        <FileContext.Provider value={{ handleFileChange, analyzeData, changeShowOverview, parsedData, header, transactions, showOverview }}>
             {children}
         </FileContext.Provider>
     );

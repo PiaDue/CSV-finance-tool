@@ -2,15 +2,18 @@ import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css'
 import FileInput from './components/FileInput';
-import FinanceData from './components/FinanceData';
+import FileData from "./components/FileData.jsx";
 import { FileProvider } from './contexts/FileContext';
+import TransactionOverview from "./components/TransactionOverview.jsx";
+
 
 function App() {
   return (
     <FileProvider>
       <div className="App">
         <FileInput />
-        <FinanceData />
+        <FileData />
+        <TransactionOverview />
       </div>
     </FileProvider>
   );

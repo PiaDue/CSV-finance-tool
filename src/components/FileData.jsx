@@ -2,13 +2,13 @@ import { useEffect, useState } from 'react';
 import { useFile } from '../contexts/FileContext';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 
-function FinanceData() {
-    const { parsedData } = useFile();
+function FileData() {
+    const { parsedData, analyzeData, showOverview } = useFile();
     const [skipLines, setSkipLines] = useState(4);
     const excludedColumns = [1,2,6,7,9,10,11]; //TODO: make this dynamic
 
     useEffect(() => {
-        console.log(parsedData);
+        console.log("csv data parsed");
     }, [parsedData]);
 
     if (!parsedData) {
@@ -16,10 +16,10 @@ function FinanceData() {
     }
 
     return (
-        <>
-            {parsedData && (
+        <div className="mt-5">
+            {!showOverview && parsedData && (
                 <div>
-                    <div className='lineSkipper'>
+                    <div className='lineSkipper m-3'>
                         <label htmlFor="skipLinesInput">Skip Lines:</label>
                         <input
                             id="skipLinesInput"
@@ -49,13 +49,13 @@ function FinanceData() {
                             ))}
                         </tbody>
                     </table>
-                    <button className="btn btn-primary btn-lg position-fixed bottom-0 end-0 m-3" onClick={() => { console.log('Analyze'); }}>
+                    <button className="btn btn-primary btn-lg position-fixed bottom-0 end-0 m-3"
+                            onClick={() => { analyzeData(skipLines) }}>
                         Analyze
                     </button>
                 </div>
             )}
-        </>
-
+        </div>
     );
 }
-export default FinanceData;
+export default FileData;
