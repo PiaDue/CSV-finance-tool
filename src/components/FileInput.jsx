@@ -9,7 +9,7 @@ function FileInput() {
 
     return (
         <>
-            <h1>Upload CSV File</h1>
+            <h3>Upload CSV File</h3>
             <div className="card">
                 <input type="file" accept=".csv" onChange={handleFileUpload} />
             </div>

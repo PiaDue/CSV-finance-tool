@@ -68,7 +68,16 @@ export const FileProvider = ({ children }) => {
         console.log(parsedData[skippedLines]);
 
         console.log('Transactions');
-        console.log(parsedData.slice(skippedLines));
+        const transactionsArr = [];
+        for (let i = skippedLines + 1; i < parsedData.length; i++) {
+                let transaction = {};
+            for (let j = 0; j < parsedData[i].length; j++) {
+                transaction = { ...transaction, [parsedData[skippedLines][j]]: parsedData[i][j] };
+            }
+            transactionsArr.push(transaction);
+        }
+        console.log(transactionsArr);
+        setTransactions(transactionsArr);
         changeShowOverview(true);
     }
 
