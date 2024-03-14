@@ -3,7 +3,18 @@ import {useEffect, useState} from "react";
 
 function TransactionOverview() {
     const { showOverview, header, transactions } = useFile();
-    const [showCol, setShowCol] = useState(new Array(20).fill(true));
+    const [showCol, setShowCol] = useState([]);
+
+    useEffect(() => {
+        const i = [1, 2, 6, 7, 9, 10, 11];
+        const initialShowCol = Array(header.length).fill(true);
+        i.forEach(index => {
+            if (index < initialShowCol.length) {
+                initialShowCol[index] = false;
+            }
+        });
+        setShowCol(initialShowCol);
+    }, [header]);
 
     const handleCheckboxChange = (index) => {
         setShowCol(showCol.map((value, i) => i === index ? !value : value));

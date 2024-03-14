@@ -63,11 +63,8 @@ export const FileProvider = ({ children }) => {
     }
 
     const analyzeData = (skippedLines) => {
-        console.log('Header');
         setHeader(parsedData[skippedLines]);
-        console.log(parsedData[skippedLines]);
 
-        console.log('Transactions');
         const transactionsArr = [];
         for (let i = skippedLines + 1; i < parsedData.length; i++) {
                 let transaction = {};
@@ -76,7 +73,6 @@ export const FileProvider = ({ children }) => {
             }
             transactionsArr.push(transaction);
         }
-        console.log(transactionsArr);
         setTransactions(transactionsArr);
         changeShowOverview(true);
     }
