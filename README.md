@@ -1,8 +1,19 @@
-# React + Vite
+# CSV Tool for finance management
+- side project for personal use
+- analyzes and visualizes finance data from csv files
+- makes my monthly finance overview easier
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# Features and Ideas
+- [x] Upload CSV file
+- [ ] Drag and drop CSV file
+- [x] Display CSV data
+- [x] Analyze CSV data
+- [x] Visualize transaction in a table
+- [x] make table columns hideable
+- [ ] categorize transactions
+- [ ] Visualize transaction with charts
+- [ ] Export monthly finance overview
 
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Tech
+- Frontend-only web app
+- TechStack: React (JS), Vite, Bootstrap

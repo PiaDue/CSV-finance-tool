@@ -14,12 +14,19 @@ function TransactionOverview() {
             }
         });
         setShowCol(initialShowCol);
+        console.log(transactions)
     }, [header]);
 
     const handleCheckboxChange = (index) => {
         setShowCol(showCol.map((value, i) => i === index ? !value : value));
     }
-
+    const categoryStyle = (category) => {
+        if (category.includes("Income")) {
+            return "table-success";
+        } else {
+            return "table-danger";
+        }
+    }
 
     return (
         <>
@@ -52,7 +59,7 @@ function TransactionOverview() {
                         </thead>
                         <tbody>
                             {transactions.map((transaction, index) => (
-                                <tr key={index}>
+                                <tr className={categoryStyle(transaction.category)} key={index}>
                                     {header.map((key, index) => (
                                         showCol[index] && <td key={index}>{transaction[key]}</td>
                                     ))}

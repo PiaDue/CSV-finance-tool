@@ -71,13 +71,29 @@ export const FileProvider = ({ children }) => {
             for (let j = 0; j < parsedData[i].length; j++) {
                 transaction = { ...transaction, [parsedData[skippedLines][j]]: parsedData[i][j] };
             }
+            /*convert  amount to float*/
+            const betragString = Object.keys(transaction)
+                .filter(key => key.includes("Betrag"))
+                .map(key => [key, transaction[key]]);
+            if (betragString.length > 0) {
+                const betragKey = betragString[0][0];
+                const betragValue = betragString[0][1];
+                const betragFloat = parseFloat(betragValue.replace(",", "."));
+                transaction = { ...transaction, [betragKey]: betragFloat };
+            }
+
+            /*categorize transactions*/
+            if (transaction["Umsatztyp"] && transaction["Umsatztyp"].includes("Eingang")) {
+                transaction = { ...transaction, category: "Income" };
+            }else{
+                transaction = { ...transaction, category: "YouPay" };
+            }
             transactionsArr.push(transaction);
         }
+
         setTransactions(transactionsArr);
         changeShowOverview(true);
     }
-
-
 
     return (
         <FileContext.Provider value={{ handleFileChange, analyzeData, changeShowOverview, parsedData, header, transactions, showOverview }}>
