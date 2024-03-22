@@ -11,8 +11,13 @@
 - [x] Visualize transaction in a table
 - [x] make table columns hideable
 - [ ] categorize transactions
+  - [x] basic categories: YouPay, GetBack, Income (color coded)
+  - [ ] expenses categories: Food, free time, subscriptions (icon coded)
+- [ ] drag and drop of transactions between categories
+- [ ] calculate expenses and income
 - [ ] Visualize transaction with charts
 - [ ] Export monthly finance overview
+- [ ] possibility to add categories and keywords  
 
 ## Tech
 - Frontend-only web app

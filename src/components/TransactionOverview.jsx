@@ -23,8 +23,10 @@ function TransactionOverview() {
     const categoryStyle = (category) => {
         if (category.includes("Income")) {
             return "table-success";
-        } else {
+        } else if (category.includes("YouPay")) {
             return "table-danger";
+        } else if (category.includes("GetBack")) {
+            return "table-warning";
         }
     }
 
@@ -58,12 +60,47 @@ function TransactionOverview() {
                             </tr>
                         </thead>
                         <tbody>
+                            <tr>
+                                <td colSpan={header.length}>
+                                    <h3 className="bg-warning-subtle m-2">Get Back</h3>
+                                </td>
+                            </tr>
                             {transactions.map((transaction, index) => (
-                                <tr className={categoryStyle(transaction.category)} key={index}>
-                                    {header.map((key, index) => (
-                                        showCol[index] && <td key={index}>{transaction[key]}</td>
-                                    ))}
-                                </tr>
+                                transaction.category === "GetBack" && (
+                                    <tr className={categoryStyle(transaction.category)} key={index}>
+                                        {header.map((key, index) => (
+                                            showCol[index] && <td key={index}>{transaction[key]}</td>
+                                        ))}
+                                    </tr>
+                                )
+                            ))}
+                            <tr>
+                                <td colSpan={header.length}>
+                                    <h3 className="bg-success-subtle m-2">Income</h3>
+                                </td>
+                            </tr>
+                            {transactions.map((transaction, index) => (
+                                transaction.category === "Income" && (
+                                    <tr className={categoryStyle(transaction.category)} key={index}>
+                                        {header.map((key, index) => (
+                                            showCol[index] && <td key={index}>{transaction[key]}</td>
+                                        ))}
+                                    </tr>
+                                )
+                            ))}
+                            <tr>
+                                <td colSpan={header.length}>
+                                    <h3 className="bg-danger-subtle m-2">You Pay</h3>
+                                </td>
+                            </tr>
+                            {transactions.map((transaction, index) => (
+                                transaction.category === "YouPay" && (
+                                    <tr className={categoryStyle(transaction.category)} key={index}>
+                                        {header.map((key, index) => (
+                                            showCol[index] && <td key={index}>{transaction[key]}</td>
+                                        ))}
+                                    </tr>
+                                )
                             ))}
                         </tbody>
                     </table>

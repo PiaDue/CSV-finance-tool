@@ -83,10 +83,18 @@ export const FileProvider = ({ children }) => {
             }
 
             /*categorize transactions*/
+            const getBackKeywords = ["REWE", "EDEKA"];
             if (transaction["Umsatztyp"] && transaction["Umsatztyp"].includes("Eingang")) {
                 transaction = { ...transaction, category: "Income" };
-            }else{
-                transaction = { ...transaction, category: "YouPay" };
+            } else {
+                const zahlungsempfanger = transaction["Zahlungsempfänger*in"];
+                const isGetBack = getBackKeywords.some(keyword => zahlungsempfanger && zahlungsempfanger.includes(keyword));
+
+                if (isGetBack) {
+                    transaction = { ...transaction, category: "GetBack" };
+                } else {
+                    transaction = { ...transaction, category: "YouPay" };
+                }
             }
             transactionsArr.push(transaction);
         }
