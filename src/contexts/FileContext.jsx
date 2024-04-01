@@ -7,6 +7,7 @@ export const FileProvider = ({ children }) => {
     const [header, setHeader] = useState([String]);
     const [showOverview, setShowOverview] = useState(false);
     const [transactions, setTransactions] = useState([]);
+    const [sums, setSums] = useState({ income: 0.0, youPay: 0.0, getBack: 0.0 });
 
     const handleFileChange = (file) => {
         if (file) {
@@ -71,12 +72,13 @@ export const FileProvider = ({ children }) => {
             for (let j = 0; j < parsedData[i].length; j++) {
                 transaction = { ...transaction, [parsedData[skippedLines][j]]: parsedData[i][j] };
             }
+
             /*convert  amount to float*/
             const betragString = Object.keys(transaction)
                 .filter(key => key.includes("Betrag"))
                 .map(key => [key, transaction[key]]);
             if (betragString.length > 0) {
-                const betragKey = betragString[0][0];
+                const betragKey = "Betrag";
                 const betragValue = betragString[0][1];
                 const betragFloat = parseFloat(betragValue.replace(",", "."));
                 transaction = { ...transaction, [betragKey]: betragFloat };
@@ -98,13 +100,25 @@ export const FileProvider = ({ children }) => {
             }
             transactionsArr.push(transaction);
         }
-
         setTransactions(transactionsArr);
         changeShowOverview(true);
     }
 
+    const calculateSums = () => {
+        const income = transactions.filter(transaction => transaction.category === "Income").reduce((acc, transaction) => acc + transaction["Betrag"], 0).toFixed(2);
+        const youPay = transactions.filter(transaction => transaction.category === "YouPay").reduce((acc, transaction) => acc + transaction["Betrag"], 0).toFixed(2);
+        const getBack = transactions.filter(transaction => transaction.category === "GetBack").reduce((acc, transaction) => acc + transaction["Betrag"], 0).toFixed(2);
+        return { income, youPay, getBack };
+    }
+
+    useEffect(() => {
+        if (transactions.length > 0) {
+            setSums(calculateSums());
+        }
+    }, [transactions]);
+
     return (
-        <FileContext.Provider value={{ handleFileChange, analyzeData, changeShowOverview, parsedData, header, transactions, showOverview }}>
+        <FileContext.Provider value={{ handleFileChange, analyzeData, changeShowOverview, parsedData, header, sums, transactions, showOverview }}>
             {children}
         </FileContext.Provider>
     );

@@ -2,7 +2,7 @@ import { useFile } from '../contexts/FileContext';
 import {useEffect, useState} from "react";
 
 function TransactionOverview() {
-    const { showOverview, header, transactions } = useFile();
+    const { showOverview, header, sums, transactions } = useFile();
     const [showCol, setShowCol] = useState([]);
 
     useEffect(() => {
@@ -60,6 +60,8 @@ function TransactionOverview() {
                             </tr>
                         </thead>
                         <tbody>
+
+                            {/*---- Get Back -----*/}
                             <tr>
                                 <td colSpan={header.length}>
                                     <h3 className="bg-warning-subtle m-2">Get Back</h3>
@@ -75,6 +77,13 @@ function TransactionOverview() {
                                 )
                             ))}
                             <tr>
+                                <td colSpan={header.length} className="text-end">
+                                    <p className={"text-warning"}><strong>= {sums.getBack} €</strong></p>
+                                </td>
+                            </tr>
+
+                            {/*---- Income -----*/}
+                            <tr>
                                 <td colSpan={header.length}>
                                     <h3 className="bg-success-subtle m-2">Income</h3>
                                 </td>
@@ -89,6 +98,13 @@ function TransactionOverview() {
                                 )
                             ))}
                             <tr>
+                                <td colSpan={header.length} className="text-end">
+                                    <p className={"text-success"}><strong>= {sums.income} €</strong></p>
+                                </td>
+                            </tr>
+
+                            {/*---- You Pay -----*/}
+                            <tr>
                                 <td colSpan={header.length}>
                                     <h3 className="bg-danger-subtle m-2">You Pay</h3>
                                 </td>
@@ -102,6 +118,12 @@ function TransactionOverview() {
                                     </tr>
                                 )
                             ))}
+                            <tr>
+                                <td colSpan={header.length} className="text-end">
+                                    <p className={"text-danger"}><strong>= {sums.youPay} €</strong></p>
+                                </td>
+                            </tr>
+
                         </tbody>
                     </table>
                 </>
