@@ -22,6 +22,12 @@ export const FileProvider = ({ children }) => {
         }
     };
 
+    const changeTransactionCategory = (transaction, category) => {
+        const updatedTransaction = { ...transaction, category };
+        const updatedTransactions = transactions.map(t => t === transaction ? updatedTransaction : t);
+        setTransactions(updatedTransactions);
+    }
+
     const changeShowOverview = (bool) => {
         setShowOverview(bool);
     }
@@ -118,7 +124,7 @@ export const FileProvider = ({ children }) => {
     }, [transactions]);
 
     return (
-        <FileContext.Provider value={{ handleFileChange, analyzeData, changeShowOverview, parsedData, header, sums, transactions, showOverview }}>
+        <FileContext.Provider value={{ handleFileChange, analyzeData, changeShowOverview, changeTransactionCategory, parsedData, header, sums, transactions, showOverview }}>
             {children}
         </FileContext.Provider>
     );

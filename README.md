@@ -10,16 +10,17 @@
 - [x] Display CSV data
 - [x] Analyze CSV data
 - [x] Visualize transaction in a table
-- [x] make table columns hideable
+- [x] hide/show table columns
 - [ ] categorize transactions
   - [x] basic categories: YouPay, GetBack, Income (color coded)
   - [ ] expenses categories: Food, free time, subscriptions (icon coded)
-- [ ] <mark>change category of transaction</mark> 
+- [x] change category of transaction
+  - [ ] flash message to undo change
 - [ ] calculate expenses and income
   - [x] calculate for each basic category
   - [ ] calculate for each expenses category
 - [ ] Visualize transaction with charts
-- [ ] Export monthly finance overview (PDF)
+- [ ] <mark>Export monthly finance overview (PDF)</mark>
 - [ ] possibility to add categories and keywords  
 
 ## Tech

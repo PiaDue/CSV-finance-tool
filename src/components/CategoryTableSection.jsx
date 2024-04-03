@@ -5,7 +5,7 @@ import Dropdown from 'react-bootstrap/Dropdown';
 
 
 function CategoryTableSection({category, showCol}){
-    const { header, sums, transactions } = useFile();
+    const { header, sums, transactions, changeTransactionCategory } = useFile();
 
     const categoryStyle = (cat) => {
         if (cat.includes("Income")) {
@@ -30,8 +30,7 @@ function CategoryTableSection({category, showCol}){
     //TODO: make this a separate component
     const categoryBox = (transac) => {
         const handleCategoryChange = (newCategory) => {
-            // You can add logic here to update the category in your data/state
-            console.log(`Changed category from ${transac.category} to ${newCategory}`);
+            changeTransactionCategory(transac, newCategory);
         };
 
         // see styles/CategoryBoxStyles.scss
@@ -41,9 +40,18 @@ function CategoryTableSection({category, showCol}){
                     <div className={`category-box ${transac.category.toLowerCase()}`}></div>
                 </Dropdown.Toggle>
                 <Dropdown.Menu>
-                    <Dropdown.Item onClick={() => handleCategoryChange('GetBack')}>Get Back</Dropdown.Item>
-                    <Dropdown.Item onClick={() => handleCategoryChange('Income')}>Income</Dropdown.Item>
-                    <Dropdown.Item onClick={() => handleCategoryChange('YouPay')}>You Pay</Dropdown.Item>
+                    <Dropdown.Item className={'d-flex'} onClick={() => handleCategoryChange('GetBack')}>
+                        <div className={`category-box getback`}></div>
+                        <span>Get Back</span>
+                    </Dropdown.Item>
+                    <Dropdown.Item className={'d-flex'} onClick={() => handleCategoryChange('Income')}>
+                        <div className={`category-box income`}></div>
+                        <span>Income</span>
+                    </Dropdown.Item>
+                    <Dropdown.Item className={'d-flex'} onClick={() => handleCategoryChange('YouPay')}>
+                        <div className={`category-box youpay`}></div>
+                        <span>You Pay</span>
+                    </Dropdown.Item>
                 </Dropdown.Menu>
             </Dropdown>
         )
