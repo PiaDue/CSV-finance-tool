@@ -1,5 +1,6 @@
 import { useFile } from '../contexts/FileContext';
 import {useEffect, useState} from "react";
+import '../styles/CategoryBoxStyles.scss';
 
 function CategoryTableSection({category, showCol}){
     const { header, sums, transactions } = useFile();
@@ -24,23 +25,16 @@ function CategoryTableSection({category, showCol}){
         }
     }
 
-    const categoryBox = (cat) => {
-        const commonStyle = {
-            height: '20px',
-            width: '20px',
-            border: '2px solid ',
-            borderColor: 'rgba(36,36,42,0.50)',
-            borderRadius: '15%',
-            margin: '2px'
+    const categoryBox = (transac) => {
+
+        const handleClick = () => {
+            console.log(`Clicked on ${transac.category}`);
         };
 
-        if (cat.includes("GetBack")) {
-            return ( <div style={{...commonStyle, backgroundColor: 'rgb(255, 243, 205)'}}></div> );
-        } else if (cat.includes("Income")) {
-            return (<div style={{...commonStyle, backgroundColor: 'rgb(209, 231, 221)'}}></div>);
-        } else if (cat.includes("YouPay") ) {
-            return (<div style={{...commonStyle, backgroundColor: 'rgb(248, 215, 218)'}}></div>);
-        }
+        // see styles/CategoryBoxStyles.scss
+        return (
+            <div onClick={handleClick} className={`category-box ${transac.category.toLowerCase()}`}></div>
+        )
     }
 
     // Dynamically access the correct prop of sums based on the category
@@ -57,7 +51,7 @@ function CategoryTableSection({category, showCol}){
             {transactions.map((transaction, index) => (
                 transaction.category.includes(category) && (
                     <tr key={index}>
-                        <td key="category">{categoryBox(transaction.category)}</td>
+                        <td key="category">{categoryBox(transaction)}</td>
                         {header.map((key, index) => (
                             showCol[index] && <td key={index}>{transaction[key]}</td>
                         ))}

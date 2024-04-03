@@ -22,25 +22,6 @@ function TransactionOverview() {
         setShowCol(showCol.map((value, i) => i === index ? !value : value));
     }
 
-    const categoryBox = (category) => {
-        const commonStyle = {
-            height: '20px',
-            width: '20px',
-            border: '2px solid ',
-            borderColor: 'rgba(36,36,42,0.50)',
-            borderRadius: '15%',
-            margin: '2px'
-        };
-
-        if (category === "GetBack") {
-            return ( <div style={{...commonStyle, backgroundColor: 'rgb(255, 243, 205)'}}></div> );
-        } else if (category === "Income") {
-            return (<div style={{...commonStyle, backgroundColor: 'rgb(209, 231, 221)'}}></div>);
-        } else if (category === "YouPay") {
-            return (<div style={{...commonStyle, backgroundColor: 'rgb(248, 215, 218)'}}></div>);
-        }
-    }
-
     return (
         <>
             {showOverview && (
