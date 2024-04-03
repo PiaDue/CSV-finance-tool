@@ -1,8 +1,9 @@
 import { useFile } from '../contexts/FileContext';
 import {useEffect, useState} from "react";
+import CategoryTableSection from "./CategoryTableSection";
 
 function TransactionOverview() {
-    const { showOverview, header, sums, transactions } = useFile();
+    const { showOverview, header, transactions } = useFile();
     const [showCol, setShowCol] = useState([]);
 
     useEffect(() => {
@@ -20,13 +21,23 @@ function TransactionOverview() {
     const handleCheckboxChange = (index) => {
         setShowCol(showCol.map((value, i) => i === index ? !value : value));
     }
-    const categoryStyle = (category) => {
-        if (category.includes("Income")) {
-            return "table-success";
-        } else if (category.includes("YouPay")) {
-            return "table-danger";
-        } else if (category.includes("GetBack")) {
-            return "table-warning";
+
+    const categoryBox = (category) => {
+        const commonStyle = {
+            height: '20px',
+            width: '20px',
+            border: '2px solid ',
+            borderColor: 'rgba(36,36,42,0.50)',
+            borderRadius: '15%',
+            margin: '2px'
+        };
+
+        if (category === "GetBack") {
+            return ( <div style={{...commonStyle, backgroundColor: 'rgb(255, 243, 205)'}}></div> );
+        } else if (category === "Income") {
+            return (<div style={{...commonStyle, backgroundColor: 'rgb(209, 231, 221)'}}></div>);
+        } else if (category === "YouPay") {
+            return (<div style={{...commonStyle, backgroundColor: 'rgb(248, 215, 218)'}}></div>);
         }
     }
 
@@ -51,79 +62,20 @@ function TransactionOverview() {
                         ))}
                     </div>
 
+                    {/*transactions table*/}
                     <table className='table table-hover'>
                         <thead>
                             <tr>
+                                <th key="category" scope="col">Kategorie</th>
                                 {header.map((cell, index) => (
                                     showCol[index] && <th key={index} scope="col">{cell}</th>
                                 ))}
                             </tr>
                         </thead>
                         <tbody>
-
-                            {/*---- Get Back -----*/}
-                            <tr>
-                                <td colSpan={header.length}>
-                                    <h3 className="bg-warning-subtle m-2">Get Back</h3>
-                                </td>
-                            </tr>
-                            {transactions.map((transaction, index) => (
-                                transaction.category === "GetBack" && (
-                                    <tr className={categoryStyle(transaction.category)} key={index}>
-                                        {header.map((key, index) => (
-                                            showCol[index] && <td key={index}>{transaction[key]}</td>
-                                        ))}
-                                    </tr>
-                                )
-                            ))}
-                            <tr>
-                                <td colSpan={header.length} className="text-end">
-                                    <p className={"text-warning"}><strong>= {sums.getBack} €</strong></p>
-                                </td>
-                            </tr>
-
-                            {/*---- Income -----*/}
-                            <tr>
-                                <td colSpan={header.length}>
-                                    <h3 className="bg-success-subtle m-2">Income</h3>
-                                </td>
-                            </tr>
-                            {transactions.map((transaction, index) => (
-                                transaction.category === "Income" && (
-                                    <tr className={categoryStyle(transaction.category)} key={index}>
-                                        {header.map((key, index) => (
-                                            showCol[index] && <td key={index}>{transaction[key]}</td>
-                                        ))}
-                                    </tr>
-                                )
-                            ))}
-                            <tr>
-                                <td colSpan={header.length} className="text-end">
-                                    <p className={"text-success"}><strong>= {sums.income} €</strong></p>
-                                </td>
-                            </tr>
-
-                            {/*---- You Pay -----*/}
-                            <tr>
-                                <td colSpan={header.length}>
-                                    <h3 className="bg-danger-subtle m-2">You Pay</h3>
-                                </td>
-                            </tr>
-                            {transactions.map((transaction, index) => (
-                                transaction.category === "YouPay" && (
-                                    <tr className={categoryStyle(transaction.category)} key={index}>
-                                        {header.map((key, index) => (
-                                            showCol[index] && <td key={index}>{transaction[key]}</td>
-                                        ))}
-                                    </tr>
-                                )
-                            ))}
-                            <tr>
-                                <td colSpan={header.length} className="text-end">
-                                    <p className={"text-danger"}><strong>= {sums.youPay} €</strong></p>
-                                </td>
-                            </tr>
-
+                            <CategoryTableSection category="GetBack" showCol={showCol}/>
+                            <CategoryTableSection category="Income" showCol={showCol}/>
+                            <CategoryTableSection category="YouPay" showCol={showCol}/>
                         </tbody>
                     </table>
                 </>
