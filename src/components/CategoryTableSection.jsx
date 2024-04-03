@@ -1,6 +1,8 @@
 import { useFile } from '../contexts/FileContext';
 import {useEffect, useState} from "react";
 import '../styles/CategoryBoxStyles.scss';
+import Dropdown from 'react-bootstrap/Dropdown';
+
 
 function CategoryTableSection({category, showCol}){
     const { header, sums, transactions } = useFile();
@@ -25,15 +27,25 @@ function CategoryTableSection({category, showCol}){
         }
     }
 
+    //TODO: make this a separate component
     const categoryBox = (transac) => {
-
-        const handleClick = () => {
-            console.log(`Clicked on ${transac.category}`);
+        const handleCategoryChange = (newCategory) => {
+            // You can add logic here to update the category in your data/state
+            console.log(`Changed category from ${transac.category} to ${newCategory}`);
         };
 
         // see styles/CategoryBoxStyles.scss
         return (
-            <div onClick={handleClick} className={`category-box ${transac.category.toLowerCase()}`}></div>
+            <Dropdown>
+                <Dropdown.Toggle as={'div'} className={'d-inline-flex p-0'} id="category-dropdown" noCaret>
+                    <div className={`category-box ${transac.category.toLowerCase()}`}></div>
+                </Dropdown.Toggle>
+                <Dropdown.Menu>
+                    <Dropdown.Item onClick={() => handleCategoryChange('GetBack')}>Get Back</Dropdown.Item>
+                    <Dropdown.Item onClick={() => handleCategoryChange('Income')}>Income</Dropdown.Item>
+                    <Dropdown.Item onClick={() => handleCategoryChange('YouPay')}>You Pay</Dropdown.Item>
+                </Dropdown.Menu>
+            </Dropdown>
         )
     }
 
