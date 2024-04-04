@@ -4,7 +4,7 @@
 - makes my monthly finance overview easier
 - run: `npm run dev`
 
-# Features and Ideas (<mark>in progress</mark>)
+# Features and Ideas
 - [x] Upload CSV file
     - [ ] Drag and drop CSV file
 - [x] Display CSV data

@@ -6,7 +6,6 @@ import Dropdown from 'react-bootstrap/Dropdown';
 
 function CategoryTableSection({category, showCol}){
     const { header, sums, transactions, changeTransactionCategory } = useFile();
-
     const categoryStyle = (cat) => {
         if (cat.includes("Income")) {
             return "bg-success-subtle m-2";

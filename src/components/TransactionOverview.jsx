@@ -1,6 +1,9 @@
 import { useFile } from '../contexts/FileContext';
 import {useEffect, useState} from "react";
 import CategoryTableSection from "./CategoryTableSection";
+import PDFGenerator from "./PDFGenerator.jsx";
+import { FileSaver } from 'file-saver';
+
 
 function TransactionOverview() {
     const { showOverview, header, transactions } = useFile();
@@ -22,11 +25,20 @@ function TransactionOverview() {
         setShowCol(showCol.map((value, i) => i === index ? !value : value));
     }
 
+    function sayHello() {
+        var blob = new Blob(["Hello, world!"], {
+            type: "text/plain;charset=utf-8"
+        });
+        FileSaver.saveAs(blob, "hello world.txt");
+    }
+
     return (
         <>
             {showOverview && (
                 <>
                     <h1>Transactions Overview</h1>
+
+                    <button onClick={sayHello}>Click me!</button>
 
                     <div>
                        {/*checkboxes for each column to show/hide*/}
