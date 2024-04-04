@@ -2,11 +2,12 @@ import { useFile } from '../contexts/FileContext';
 import {useEffect, useState} from "react";
 import CategoryTableSection from "./CategoryTableSection";
 import PDFGenerator from "./PDFGenerator.jsx";
-import { FileSaver } from 'file-saver';
+import saveAs from 'file-saver';
+import { pdf } from '@react-pdf/renderer'
 
 
 function TransactionOverview() {
-    const { showOverview, header, transactions } = useFile();
+    const { showOverview, header, transactions, sums } = useFile();
     const [showCol, setShowCol] = useState([]);
 
     useEffect(() => {
@@ -25,12 +26,10 @@ function TransactionOverview() {
         setShowCol(showCol.map((value, i) => i === index ? !value : value));
     }
 
-    function sayHello() {
-        var blob = new Blob(["Hello, world!"], {
-            type: "text/plain;charset=utf-8"
-        });
-        FileSaver.saveAs(blob, "hello world.txt");
-    }
+    const generatePDF = async () => {
+        const blob = await pdf(<PDFGenerator header={header} sums={sums} transactions={transactions} showCol={showCol} />).toBlob()
+        saveAs(blob, 'untitled.pdf')
+    };
 
     return (
         <>
@@ -38,7 +37,7 @@ function TransactionOverview() {
                 <>
                     <h1>Transactions Overview</h1>
 
-                    <button onClick={sayHello}>Click me!</button>
+                    <button onClick={generatePDF}>Generate PDF</button>
 
                     <div>
                        {/*checkboxes for each column to show/hide*/}
