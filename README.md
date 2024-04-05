@@ -7,6 +7,7 @@
 # Features and Ideas
 - [x] Upload CSV file
     - [ ] Drag and drop CSV file
+    - [x] Remove File button
 - [x] Display CSV data
 - [x] Analyze CSV data
 - [x] Visualize transaction in a table
@@ -20,7 +21,7 @@
   - [x] calculate for each basic category
   - [ ] calculate for each expenses category
 - [ ] Visualize transaction with charts
-- [ ] <mark>Export monthly finance overview (PDF)</mark>
+- [x] Export monthly finance overview (PDF)
 - [ ] possibility to add categories and keywords  
 
 ## Tech
