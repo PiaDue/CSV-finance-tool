@@ -7,7 +7,7 @@ import { pdf } from '@react-pdf/renderer'
 
 
 function TransactionOverview() {
-    const { showOverview, header, transactions, sums } = useFile();
+    const { showOverview, header, transactions, sums, monthYear } = useFile();
     const [showCol, setShowCol] = useState([]);
 
     useEffect(() => {
@@ -27,8 +27,8 @@ function TransactionOverview() {
     }
 
     const generatePDF = async () => {
-        const blob = await pdf(<PDFGenerator header={header} sums={sums} transactions={transactions} showCol={showCol} />).toBlob()
-        saveAs(blob, 'untitled.pdf')
+        const blob = await pdf(<PDFGenerator header={header} sums={sums} transactions={transactions} showCol={showCol} monthYear={monthYear} />).toBlob()
+        saveAs(blob, `${monthYear.m}-${monthYear.y}-abrechnung.pdf`)
     };
 
     return (
@@ -36,8 +36,6 @@ function TransactionOverview() {
             {showOverview && (
                 <>
                     <h1>Transactions Overview</h1>
-
-                    <button onClick={generatePDF}>Generate PDF</button>
 
                     <div>
                        {/*checkboxes for each column to show/hide*/}
@@ -55,7 +53,7 @@ function TransactionOverview() {
                     </div>
 
                     {/*transactions table*/}
-                    <table className='table'>
+                    <table className='table mb-5'>
                         <thead>
                             <tr>
                                 <th key="category" scope="col">Kategorie</th>
@@ -70,6 +68,10 @@ function TransactionOverview() {
                             <CategoryTableSection category="YouPay" showCol={showCol}/>
                         </tbody>
                     </table>
+                    <button className="btn btn-primary btn-lg position-fixed bottom-0 end-0 m-3"
+                            onClick={generatePDF}>
+                        <i className="bi bi-download me-1"></i> PDF
+                    </button>
                 </>
             )}
         </>

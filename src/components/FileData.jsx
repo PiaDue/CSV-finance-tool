@@ -29,7 +29,7 @@ function FileData() {
                             min={0}
                         />
                     </div>
-                    <table className='table table-hover'>
+                    <table className='table mb-5'>
                         <thead>
                             <tr>
                                 <th scope="col">*</th>
@@ -51,6 +51,7 @@ function FileData() {
                     </table>
                     <button className="btn btn-primary btn-lg position-fixed bottom-0 end-0 m-3"
                             onClick={() => { analyzeData(skipLines) }}>
+                        <i className="bi bi-arrow-right me-2"></i>
                         Analyze
                     </button>
                 </div>

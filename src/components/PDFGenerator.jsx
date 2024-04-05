@@ -1,7 +1,7 @@
 import React from 'react';
 import {Document, Page, Text, StyleSheet, View} from '@react-pdf/renderer';
 
-function PDFGenerator ({header, sums, transactions, showCol}) {
+function PDFGenerator ({header, sums, transactions, showCol, monthYear}) {
 
     const styles = StyleSheet.create({
         page: {
@@ -55,7 +55,7 @@ function PDFGenerator ({header, sums, transactions, showCol}) {
         <Document>
             <Page style={styles.page}>
                 <View style={styles.section}>
-                    <Text style={styles.header}>Abrechnung [Monat][Jahr]</Text>
+                    <Text style={styles.header}>Abrechnung: {monthYear.m } 20{monthYear.y}</Text>
                 </View>
                 <View style={styles.section}>
                     <Text style={[styles.categoryHeader, { color: '#ffc107' }]}>GetBack</Text>

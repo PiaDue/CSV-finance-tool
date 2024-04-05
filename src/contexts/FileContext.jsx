@@ -4,6 +4,7 @@ export const useFile = () => useContext(FileContext);
 
 export const FileProvider = ({ children }) => {
     const [parsedData, setParsedData] = useState(null);
+    const [monthYear, setMonthYear] = useState({ m: 0, y: 0});
     const [header, setHeader] = useState([String]);
     const [showOverview, setShowOverview] = useState(false);
     const [transactions, setTransactions] = useState([]);
@@ -18,8 +19,14 @@ export const FileProvider = ({ children }) => {
                 setParsedData(parsedData);
             };
             reader.readAsText(file, 'ISO-8859-1');
-            changeShowOverview(false);
+        }else {
+            setParsedData(null);
+            setHeader([String]);
+            setMonthYear({ m: 0, y: 0 });
+            setTransactions([]);
+            setSums({ income: 0.0, youPay: 0.0, getBack: 0.0 });
         }
+        changeShowOverview(false);
     };
 
     const changeTransactionCategory = (transaction, category) => {
@@ -72,6 +79,7 @@ export const FileProvider = ({ children }) => {
     const analyzeData = (skippedLines) => {
         setHeader(parsedData[skippedLines]);
 
+
         const transactionsArr = [];
         for (let i = skippedLines + 1; i < parsedData.length; i++) {
                 let transaction = {};
@@ -107,6 +115,12 @@ export const FileProvider = ({ children }) => {
             transactionsArr.push(transaction);
         }
         setTransactions(transactionsArr);
+
+        const date = transactionsArr[0]["Buchungsdatum"];
+        const month = date.split(".")[1];
+        const year = date.split(".")[2];
+        setMonthYear({ m: month, y: year });
+
         changeShowOverview(true);
     }
 
@@ -124,7 +138,7 @@ export const FileProvider = ({ children }) => {
     }, [transactions]);
 
     return (
-        <FileContext.Provider value={{ handleFileChange, analyzeData, changeShowOverview, changeTransactionCategory, parsedData, header, sums, transactions, showOverview }}>
+        <FileContext.Provider value={{ handleFileChange, analyzeData, changeShowOverview, changeTransactionCategory, parsedData, header, monthYear, sums, transactions, showOverview }}>
             {children}
         </FileContext.Provider>
     );
