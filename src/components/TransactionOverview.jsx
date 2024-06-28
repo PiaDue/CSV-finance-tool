@@ -1,5 +1,5 @@
 import { useFile } from '../contexts/FileContext';
-import {useEffect, useState} from "react";
+import { useEffect, useState } from "react";
 import CategoryTableSection from "./CategoryTableSection";
 import PDFGenerator from "./PDFGenerator.jsx";
 import saveAs from 'file-saver';
@@ -7,7 +7,7 @@ import { pdf } from '@react-pdf/renderer'
 
 
 function TransactionOverview() {
-    const { showOverview, header, transactions, sums, monthYear } = useFile();
+    const { showOverview, getBackKeywords, header, transactions, sums, monthYear } = useFile();
     const [showCol, setShowCol] = useState([]);
 
     useEffect(() => {
@@ -38,7 +38,7 @@ function TransactionOverview() {
                     <h1>Transactions Overview</h1>
 
                     <div>
-                       {/*checkboxes for each column to show/hide*/}
+                        {/*checkboxes for each column to show/hide*/}
                         {header.map((key, index) => (
                             <div key={index} className="form-check form-check-inline">
                                 <input
@@ -63,13 +63,16 @@ function TransactionOverview() {
                             </tr>
                         </thead>
                         <tbody>
-                            <CategoryTableSection category="GetBack" showCol={showCol}/>
-                            <CategoryTableSection category="Income" showCol={showCol}/>
-                            <CategoryTableSection category="YouPay" showCol={showCol}/>
+                            <tr><td colSpan={header.length}>
+                                <h3>GetBack Keywords: {getBackKeywords}</h3>
+                            </td></tr>
+                            <CategoryTableSection category="GetBack" showCol={showCol} />
+                            <CategoryTableSection category="Income" showCol={showCol} />
+                            <CategoryTableSection category="YouPay" showCol={showCol} />
                         </tbody>
                     </table>
                     <button className="btn btn-primary btn-lg position-fixed bottom-0 end-0 m-3"
-                            onClick={generatePDF}>
+                        onClick={generatePDF}>
                         <i className="bi bi-download me-1"></i> PDF
                     </button>
                 </>

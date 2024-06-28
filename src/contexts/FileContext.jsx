@@ -4,11 +4,12 @@ export const useFile = () => useContext(FileContext);
 
 export const FileProvider = ({ children }) => {
     const [parsedData, setParsedData] = useState(null);
-    const [monthYear, setMonthYear] = useState({ m: 0, y: 0});
+    const [monthYear, setMonthYear] = useState({ m: 0, y: 0 });
     const [header, setHeader] = useState([String]);
     const [showOverview, setShowOverview] = useState(false);
     const [transactions, setTransactions] = useState([]);
     const [sums, setSums] = useState({ income: 0.0, youPay: 0.0, getBack: 0.0 });
+    const [getBackKeywords, setGetBackKeywords] = useState(["REWE", "EDEKA"]);
 
     const handleFileChange = (file) => {
         if (file) {
@@ -19,7 +20,7 @@ export const FileProvider = ({ children }) => {
                 setParsedData(parsedData);
             };
             reader.readAsText(file, 'ISO-8859-1');
-        }else {
+        } else {
             setParsedData(null);
             setHeader([String]);
             setMonthYear({ m: 0, y: 0 });
@@ -82,7 +83,7 @@ export const FileProvider = ({ children }) => {
 
         const transactionsArr = [];
         for (let i = skippedLines + 1; i < parsedData.length; i++) {
-                let transaction = {};
+            let transaction = {};
             for (let j = 0; j < parsedData[i].length; j++) {
                 transaction = { ...transaction, [parsedData[skippedLines][j]]: parsedData[i][j] };
             }
@@ -99,7 +100,7 @@ export const FileProvider = ({ children }) => {
             }
 
             /*categorize transactions*/
-            const getBackKeywords = ["REWE", "EDEKA"];
+            //const getBackKeywords = ["REWE", "EDEKA"];
             if (transaction["Umsatztyp"] && transaction["Umsatztyp"].includes("Eingang")) {
                 transaction = { ...transaction, category: "Income" };
             } else {
@@ -138,7 +139,19 @@ export const FileProvider = ({ children }) => {
     }, [transactions]);
 
     return (
-        <FileContext.Provider value={{ handleFileChange, analyzeData, changeShowOverview, changeTransactionCategory, parsedData, header, monthYear, sums, transactions, showOverview }}>
+        <FileContext.Provider value={{
+            handleFileChange,
+            analyzeData,
+            changeShowOverview,
+            changeTransactionCategory,
+            getBackKeywords,
+            parsedData,
+            header,
+            monthYear,
+            sums,
+            transactions,
+            showOverview
+        }}>
             {children}
         </FileContext.Provider>
     );
