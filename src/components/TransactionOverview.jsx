@@ -7,7 +7,7 @@ import { pdf } from '@react-pdf/renderer'
 
 
 function TransactionOverview() {
-    const { showOverview, getBackKeywords, header, transactions, sums, monthYear } = useFile();
+    const { showOverview, header, transactions, sums, monthYear } = useFile();
     const [showCol, setShowCol] = useState([]);
 
     useEffect(() => {
@@ -63,9 +63,6 @@ function TransactionOverview() {
                             </tr>
                         </thead>
                         <tbody>
-                            <tr><td colSpan={header.length}>
-                                <h3>GetBack Keywords: {getBackKeywords}</h3>
-                            </td></tr>
                             <CategoryTableSection category="GetBack" showCol={showCol} />
                             <CategoryTableSection category="Income" showCol={showCol} />
                             <CategoryTableSection category="YouPay" showCol={showCol} />

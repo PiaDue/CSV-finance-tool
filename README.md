@@ -24,7 +24,7 @@
 **V2** 
 - [ ] upload File using Drag and drop
 - [ ] ability to add transactions manually
-- [ ] ability to change keywords for categories
+- [x] ability to change keywords for getBack category
 - [ ] expense categories: Food, free time, subscriptions etc.
   - [ ] icon-coded categories
   - [ ] calculate expenses for each category

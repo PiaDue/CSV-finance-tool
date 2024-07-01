@@ -1,8 +1,10 @@
+/* eslint-disable react/prop-types */
 import { createContext, useState, useContext, useEffect } from 'react';
 const FileContext = createContext();
 export const useFile = () => useContext(FileContext);
 
 export const FileProvider = ({ children }) => {
+    const [linesSkippedContext, setLinesSkippedContext] = useState(0);
     const [parsedData, setParsedData] = useState(null);
     const [monthYear, setMonthYear] = useState({ m: 0, y: 0 });
     const [header, setHeader] = useState([String]);
@@ -38,6 +40,10 @@ export const FileProvider = ({ children }) => {
 
     const changeShowOverview = (bool) => {
         setShowOverview(bool);
+    }
+
+    const changeGetBackKeywords = (keywords) => {
+        setGetBackKeywords(keywords);
     }
 
 
@@ -79,6 +85,7 @@ export const FileProvider = ({ children }) => {
 
     const analyzeData = (skippedLines) => {
         setHeader(parsedData[skippedLines]);
+        setLinesSkippedContext(skippedLines);
 
 
         const transactionsArr = [];
@@ -105,7 +112,7 @@ export const FileProvider = ({ children }) => {
                 transaction = { ...transaction, category: "Income" };
             } else {
                 const zahlungsempfanger = transaction["Zahlungsempfänger*in"];
-                const isGetBack = getBackKeywords.some(keyword => zahlungsempfanger && zahlungsempfanger.includes(keyword));
+                const isGetBack = getBackKeywords.some(keyword => zahlungsempfanger && zahlungsempfanger.toLowerCase().includes(keyword.toLowerCase()));
 
                 if (isGetBack) {
                     transaction = { ...transaction, category: "GetBack" };
@@ -124,6 +131,14 @@ export const FileProvider = ({ children }) => {
 
         changeShowOverview(true);
     }
+
+    //analyze data again when getBackKeywords change
+    useEffect(() => {
+        if (parsedData && showOverview) {
+            analyzeData(linesSkippedContext);
+        }
+    }, [getBackKeywords]);
+
 
     const calculateSums = () => {
         const income = transactions.filter(transaction => transaction.category === "Income").reduce((acc, transaction) => acc + transaction["Betrag"], 0).toFixed(2);
@@ -145,6 +160,7 @@ export const FileProvider = ({ children }) => {
             changeShowOverview,
             changeTransactionCategory,
             getBackKeywords,
+            changeGetBackKeywords,
             parsedData,
             header,
             monthYear,

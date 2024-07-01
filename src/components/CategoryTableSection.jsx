@@ -1,11 +1,14 @@
+/* eslint-disable react/prop-types */
 import { useFile } from '../contexts/FileContext';
-import {useEffect, useState} from "react";
+import GBCategorySection from "./GBCategorySection";
 import '../styles/CategoryBoxStyles.scss';
 import Dropdown from 'react-bootstrap/Dropdown';
 
 
-function CategoryTableSection({category, showCol}){
+function CategoryTableSection({ category, showCol }) {
+
     const { header, sums, transactions, changeTransactionCategory } = useFile();
+
     const categoryStyle = (cat) => {
         if (cat.includes("Income")) {
             return "bg-success-subtle m-2";
@@ -59,14 +62,26 @@ function CategoryTableSection({category, showCol}){
     // Dynamically access the correct prop of sums based on the category
     const categorySum = category === "Income" ? sums.income : category === "YouPay" ? sums.youPay : sums.getBack;
 
+    const GBKeywords = (category) => {
+        if (category === "GetBack") {
+            return (
+                <tr><td colSpan={header.length} className="text-start">
+                    <GBCategorySection />
+                </td></tr>
+            )
+        }
 
-    return(
+    };
+
+
+    return (
         <>
             <tr>
                 <td colSpan={header.length}>
                     <h3 className={categoryStyle(category)} >{category}</h3>
                 </td>
             </tr>
+            {GBKeywords(category)}
             {transactions.map((transaction, index) => (
                 transaction.category.includes(category) && (
                     <tr key={index}>
