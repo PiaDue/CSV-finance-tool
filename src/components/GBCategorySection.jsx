@@ -5,7 +5,7 @@ import { Modal, Button, Form } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function GBCategorySection() {
-    const { getBackKeywords, changeGetBackKeywords } = useFile();
+    const { getBackKeywords, saveGetBackKeywords } = useFile();
     const [keywords, setKeywords] = useState(getBackKeywords.join(","));
     const [newKeywords, setNewKeywords] = useState(getBackKeywords);
     const [showModal, setShowModal] = useState(false);
@@ -14,12 +14,16 @@ function GBCategorySection() {
     const handleShowModal = () => setShowModal(true);
 
     const handleKeywordsChange = (e) => {
-        setNewKeywords(e.target.value.split(","));
+        const k = e.target.value
+            .split(",")
+            .map(keyword => keyword.trim())
+
+        setNewKeywords(k);
     };
 
     const handleSave = () => {
         setKeywords(newKeywords.join(","));
-        changeGetBackKeywords(newKeywords);
+        saveGetBackKeywords(newKeywords);
         handleCloseModal();
     };
 

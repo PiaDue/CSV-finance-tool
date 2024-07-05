@@ -1,5 +1,6 @@
 /* eslint-disable react/prop-types */
 import { createContext, useState, useContext, useEffect } from 'react';
+import axios from 'axios';
 const FileContext = createContext();
 export const useFile = () => useContext(FileContext);
 
@@ -11,7 +12,44 @@ export const FileProvider = ({ children }) => {
     const [showOverview, setShowOverview] = useState(false);
     const [transactions, setTransactions] = useState([]);
     const [sums, setSums] = useState({ income: 0.0, youPay: 0.0, getBack: 0.0 });
-    const [getBackKeywords, setGetBackKeywords] = useState(["REWE", "EDEKA"]);
+    const [getBackKeywords, setGetBackKeywords] = useState([]);
+
+    useEffect(() => {
+        // Fetch keywords from the local JSON file when the component mounts
+        const fetchGetBackKeywords = async () => {
+            try {
+                const response = await axios.get('http://localhost:5001/getBackKeywords');
+                setGetBackKeywords(response.data.map(item => item.keyword));
+            } catch (error) {
+                console.error('Error fetching keywords:', error);
+            }
+        };
+
+        fetchGetBackKeywords();
+    }, []);
+
+    const saveGetBackKeywords = async (newKeywords) => {
+        try {
+            const updatedKeywords = newKeywords.map((keyword, index) => ({ id: (index + 1).toString(), keyword }));
+
+            // Clear all existing keywords
+            const response = await axios.get('http://localhost:5001/getBackKeywords');
+            const currentKeywords = response.data;
+            for (const currKeyword of currentKeywords) {
+                await axios.delete(`http://localhost:5001/getBackKeywords/${currKeyword.id}`);
+            }
+
+            // Add updated keywords
+            for (const keyword of updatedKeywords) {
+                await axios.post('http://localhost:5001/getBackKeywords', keyword);
+            }
+
+            setGetBackKeywords(newKeywords);
+        } catch (error) {
+            console.error('Error saving keywords:', error);
+        }
+    };
+
 
     const handleFileChange = (file) => {
         if (file) {
@@ -41,11 +79,6 @@ export const FileProvider = ({ children }) => {
     const changeShowOverview = (bool) => {
         setShowOverview(bool);
     }
-
-    const changeGetBackKeywords = (keywords) => {
-        setGetBackKeywords(keywords);
-    }
-
 
     const parseCSV = (str) => {
         const arr = []; //TODO: use a type to save the data in objects
@@ -160,7 +193,7 @@ export const FileProvider = ({ children }) => {
             changeShowOverview,
             changeTransactionCategory,
             getBackKeywords,
-            changeGetBackKeywords,
+            saveGetBackKeywords,
             parsedData,
             header,
             monthYear,

@@ -2,7 +2,8 @@
 - side project for personal use
 - analyzes and visualizes finance data from csv files
 - makes my monthly finance overview easier
-- run: `npm run dev`
+- Terminal1: `npm run json-server`
+- Terminal2: `npm run dev`
 
 # Features and Ideas
   **V1**
@@ -25,6 +26,7 @@
 - [ ] upload File using Drag and drop
 - [ ] ability to add transactions manually
 - [x] ability to change keywords for getBack category
+- [x] persist data in local storage (json-server)
 - [ ] expense categories: Food, free time, subscriptions etc.
   - [ ] icon-coded categories
   - [ ] calculate expenses for each category
@@ -37,3 +39,4 @@
 ## Tech
 - Frontend-only web app
 - TechStack: React (JS), Vite, Bootstrap
+- json-server to simulate backend
