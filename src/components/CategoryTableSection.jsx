@@ -1,6 +1,8 @@
 /* eslint-disable react/prop-types */
 import { useFile } from '../contexts/FileContext';
 import GBCategorySection from "./GBCategorySection";
+import 'bootstrap-icons/font/bootstrap-icons.css';
+import AddTransactionModal from './AddTransactionModal';
 import '../styles/CategoryBoxStyles.scss';
 import Dropdown from 'react-bootstrap/Dropdown';
 
@@ -93,7 +95,10 @@ function CategoryTableSection({ category, showCol }) {
                 )
             ))}
             <tr>
-                <td colSpan={header.length} className="text-end">
+                <td>
+                    <AddTransactionModal />
+                </td>
+                <td colSpan={header.length - 1} className="text-end">
                     <p className={categoryText(category)}><strong>= {categorySum} €</strong></p>
                 </td>
             </tr>

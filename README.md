@@ -24,7 +24,8 @@
 
 **V2** 
 - [ ] upload File using Drag and drop
-- [ ] ability to add transactions manually
+- [ ] add transactions manually
+- [ ] delete transactions manually (+ undo)
 - [x] ability to change keywords for getBack category
 - [x] persist data in local storage (json-server)
 - [ ] expense categories: Food, free time, subscriptions etc.
