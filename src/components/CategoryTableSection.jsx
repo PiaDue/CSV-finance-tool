@@ -96,7 +96,7 @@ function CategoryTableSection({ category, showCol }) {
             ))}
             <tr>
                 <td>
-                    <AddTransactionModal />
+                    <AddTransactionModal initialCategory={category} />
                 </td>
                 <td colSpan={header.length - 1} className="text-end">
                     <p className={categoryText(category)}><strong>= {categorySum} €</strong></p>

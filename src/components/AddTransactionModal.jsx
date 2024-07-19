@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Modal, Form, Button, Col, Row } from 'react-bootstrap';
 import DatePicker from 'react-datepicker';
 import { useFile } from '../contexts/FileContext';
@@ -6,7 +6,8 @@ import 'react-datepicker/dist/react-datepicker.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../styles/AddTransactionModalStyles.scss';
 
-function AddTransactionModal() {
+
+function AddTransactionModal({ initialCategory }) {
     const [show, setShow] = useState(false);
     const { addTransaction } = useFile();
 
@@ -21,6 +22,11 @@ function AddTransactionModal() {
         betrag: '',
         category: ''
     });
+
+    useEffect(() => {
+        setFormData({ category: initialCategory });
+    }, []);
+
 
     const handleChange = (e) => {
         const { name, value } = e.target;
