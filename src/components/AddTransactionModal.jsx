@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import { Modal, Form, Button, Col, Row } from 'react-bootstrap';
 import DatePicker from 'react-datepicker';
+import { useFile } from '../contexts/FileContext';
 import 'react-datepicker/dist/react-datepicker.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../styles/AddTransactionModalStyles.scss';
 
 function AddTransactionModal() {
     const [show, setShow] = useState(false);
+    const { addTransaction } = useFile();
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
@@ -37,7 +39,15 @@ function AddTransactionModal() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log('Form Data Submitted:', formData);
+        addTransaction(formData);
+
+        setFormData({
+            date: new Date(),
+            verwendungszweck: '',
+            betrag: '',
+            category: ''
+        });
+        handleClose();
     };
 
     return (
@@ -61,32 +71,6 @@ function AddTransactionModal() {
                                     onChange={handleDateChange}
                                     dateFormat="dd/MM/yyyy"
                                     className="form-control"
-                                />
-                            </Col>
-                        </Form.Group>
-
-                        <Form.Group as={Row} controlId="formZahlungspflichtige">
-                            <Form.Label column sm="4">Zahlungspflichtige*r</Form.Label>
-                            <Col sm="8">
-                                <Form.Control
-                                    type="text"
-                                    name="zahlungspflichtige"
-                                    value={formData.zahlungspflichtige}
-                                    onChange={handleChange}
-                                    placeholder="Zahlungspflichtige*r"
-                                />
-                            </Col>
-                        </Form.Group>
-
-                        <Form.Group as={Row} controlId="formZahlungsempfanger">
-                            <Form.Label column sm="4">Zahlungsempfänger*in</Form.Label>
-                            <Col sm="8">
-                                <Form.Control
-                                    type="text"
-                                    name="zahlungsempfanger"
-                                    value={formData.zahlungsempfanger}
-                                    onChange={handleChange}
-                                    placeholder="Zahlungsempfänger*in"
                                 />
                             </Col>
                         </Form.Group>

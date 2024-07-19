@@ -165,6 +165,30 @@ export const FileProvider = ({ children }) => {
         changeShowOverview(true);
     }
 
+    const addTransaction = (formData) => {
+        const lastTransaction = transactions[transactions.length - 1];
+
+        const newTransaction = {
+            ...lastTransaction,
+            "Betrag": parseFloat(formData.betrag.replace(",", ".")),
+            "Betrag (€)": formData.betrag,
+            "Buchungsdatum": formData.date.toLocaleDateString('de-DE', { year: '2-digit', month: '2-digit', day: '2-digit' }).replace(/\//g, '.'),
+            "Wertstellung": formData.date.toLocaleDateString('de-DE', { year: '2-digit', month: '2-digit', day: '2-digit' }).replace(/\//g, '.'),
+            "Gläubiger-ID": "",
+            "IBAN": "",
+            "Kundenreferenz": "",
+            "Mandatsreferenz": "",
+            "Status": "",
+            "Umsatztyp": "",
+            "Verwendungszweck": formData.verwendungszweck,
+            "Zahlungsempfänger*in": "",
+            "Zahlungspflichtige*r": "",
+            "category": formData.category
+        };
+
+        setTransactions([...transactions, newTransaction]);
+    }
+
     //analyze data again when getBackKeywords change
     useEffect(() => {
         if (parsedData && showOverview) {
@@ -199,7 +223,8 @@ export const FileProvider = ({ children }) => {
             monthYear,
             sums,
             transactions,
-            showOverview
+            showOverview,
+            addTransaction
         }}>
             {children}
         </FileContext.Provider>
