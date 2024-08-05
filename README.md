@@ -24,7 +24,7 @@
 
 **V2** 
 - [ ] upload File using Drag and drop
-- [ ] add transactions manually
+- [x] add transactions manually
 - [ ] delete transactions manually (+ undo)
 - [x] ability to change keywords for getBack category
 - [x] persist data in local storage (json-server)

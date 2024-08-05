@@ -8,5 +8,52 @@
       "id": "2",
       "keyword": "hofer"
     }
+  ],
+  "expenseCategories": [
+    {
+      "id": "1",
+      "title": "Einkäufe",
+      "icon": "cart3"
+    },
+    {
+      "id": "2",
+      "title": "Wohnen",
+      "icon": "house"
+    },
+    {
+      "id": "3",
+      "title": "Abbos",
+      "icon": "credit-card"
+    },
+    {
+      "id": "4",
+      "title": "Bildung",
+      "icon": "book"
+    },
+    {
+      "id": "5",
+      "title": "Kleidung",
+      "icon": "bag-heart"
+    },
+    {
+      "id": "6",
+      "title": "Freizeit",
+      "icon": "emoji-smile"
+    },
+    {
+      "id": "7",
+      "title": "Reisen",
+      "icon": "geo"
+    },
+    {
+      "id": "8",
+      "title": "Restaurant",
+      "icon": "cup-straw"
+    },
+    {
+      "id": "9",
+      "title": "Sonstiges",
+      "icon": "three-dots"
+    }
   ]
 }

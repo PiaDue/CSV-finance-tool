@@ -13,9 +13,10 @@ export const FileProvider = ({ children }) => {
     const [transactions, setTransactions] = useState([]);
     const [sums, setSums] = useState({ income: 0.0, youPay: 0.0, getBack: 0.0 });
     const [getBackKeywords, setGetBackKeywords] = useState([]);
+    const [expCategories, setExpCategories] = useState([]);
 
     useEffect(() => {
-        // Fetch keywords from the local JSON file when the component mounts
+        // Fetch data form local JSON server
         const fetchGetBackKeywords = async () => {
             try {
                 const response = await axios.get('http://localhost:5001/getBackKeywords');
@@ -25,7 +26,17 @@ export const FileProvider = ({ children }) => {
             }
         };
 
+        const fetchExpenseCategories = async () => {
+            try {
+                const response = await axios.get('http://localhost:5001/expenseCategories');
+                setExpCategories(response.data);
+            } catch (error) {
+                console.error('Error fetching expense categories:', error);
+            }
+        }
+
         fetchGetBackKeywords();
+        fetchExpenseCategories();
     }, []);
 
     const saveGetBackKeywords = async (newKeywords) => {
@@ -140,7 +151,6 @@ export const FileProvider = ({ children }) => {
             }
 
             /*categorize transactions*/
-            //const getBackKeywords = ["REWE", "EDEKA"];
             if (transaction["Umsatztyp"] && transaction["Umsatztyp"].includes("Eingang")) {
                 transaction = { ...transaction, category: "Income" };
             } else {
@@ -188,6 +198,28 @@ export const FileProvider = ({ children }) => {
 
         setTransactions([...transactions, newTransaction]);
     }
+
+
+    // Expense Categorization
+    useEffect(() => {
+
+        if (transactions.length > 0) {
+            for (const transaction of transactions) {
+                if (!transaction.expCat && transaction.category === "YouPay") {
+
+                    //TODO: ChatGPT API Category Prediction
+                    //for testing: chose random cat of expCategories
+                    const randomIndex = Math.floor(Math.random() * expCategories.length);
+                    transaction.expCat = expCategories[randomIndex];
+                }
+            }
+
+            //TODO: calculate sums for each expcat
+        }
+    }, [transactions]);
+
+
+
 
     //analyze data again when getBackKeywords change
     useEffect(() => {

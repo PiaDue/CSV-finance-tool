@@ -68,6 +68,7 @@ function TransactionOverview() {
                             <CategoryTableSection category="YouPay" showCol={showCol} />
                         </tbody>
                     </table>
+
                     <button className="btn btn-primary btn-lg position-fixed bottom-0 end-0 m-3"
                         onClick={generatePDF}>
                         <i className="bi bi-download me-1"></i> PDF

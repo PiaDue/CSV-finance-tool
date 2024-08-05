@@ -2,6 +2,7 @@
 import { useFile } from '../contexts/FileContext';
 import GBCategorySection from "./GBCategorySection";
 import 'bootstrap-icons/font/bootstrap-icons.css';
+import { Button } from 'react-bootstrap';
 import AddTransactionModal from './AddTransactionModal';
 import '../styles/CategoryBoxStyles.scss';
 import Dropdown from 'react-bootstrap/Dropdown';
@@ -39,25 +40,39 @@ function CategoryTableSection({ category, showCol }) {
 
         // see styles/CategoryBoxStyles.scss
         return (
-            <Dropdown>
-                <Dropdown.Toggle as={'div'} className={'d-inline-flex p-0'} id="category-dropdown" noCaret>
-                    <div className={`category-box ${transac.category.toLowerCase()}`}></div>
-                </Dropdown.Toggle>
-                <Dropdown.Menu>
-                    <Dropdown.Item className={'d-flex'} onClick={() => handleCategoryChange('GetBack')}>
-                        <div className={`category-box getback`}></div>
-                        <span>Get Back</span>
-                    </Dropdown.Item>
-                    <Dropdown.Item className={'d-flex'} onClick={() => handleCategoryChange('Income')}>
-                        <div className={`category-box income`}></div>
-                        <span>Income</span>
-                    </Dropdown.Item>
-                    <Dropdown.Item className={'d-flex'} onClick={() => handleCategoryChange('YouPay')}>
-                        <div className={`category-box youpay`}></div>
-                        <span>You Pay</span>
-                    </Dropdown.Item>
-                </Dropdown.Menu>
-            </Dropdown>
+            <div className='d-flex justify-content-between align-items-center'>
+                <div>
+                    <Dropdown>
+                        <Dropdown.Toggle as={'div'} className={'d-inline-flex p-0'} id="category-dropdown" noCaret>
+                            <div className={`category-box ${transac.category.toLowerCase()}`}></div>
+                        </Dropdown.Toggle>
+                        <Dropdown.Menu>
+                            <Dropdown.Item className={'d-flex'} onClick={() => handleCategoryChange('GetBack')}>
+                                <div className={`category-box getback`}></div>
+                                <span>Get Back</span>
+                            </Dropdown.Item>
+                            <Dropdown.Item className={'d-flex'} onClick={() => handleCategoryChange('Income')}>
+                                <div className={`category-box income`}></div>
+                                <span>Income</span>
+                            </Dropdown.Item>
+                            <Dropdown.Item className={'d-flex'} onClick={() => handleCategoryChange('YouPay')}>
+                                <div className={`category-box youpay`}></div>
+                                <span>You Pay</span>
+                            </Dropdown.Item>
+                        </Dropdown.Menu>
+                    </Dropdown>
+                </div>
+                <div>
+                    {transac.category === "YouPay" && transac.expCat && (
+                        <div className="d-flex">
+                            <Button variant="light" size="sm" className="m-1">
+                                <i className={"bi bi-" + transac.expCat.icon}></i>
+                                {/** <span>{transac.expCat.title}</span> */}
+                            </Button>
+                        </div>
+                    )}
+                </div>
+            </div>
         )
     }
 
