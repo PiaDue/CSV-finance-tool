@@ -4,6 +4,8 @@ import PieChart from './PieChart';
 
 function ExpensesOverview() {
     const { transactions, expCategories } = useFile();
+    //expCategories: {id, title, icon}
+
     const [expCatSums, setExpCatSums] = useState([]);
 
     useEffect(() => {
@@ -16,7 +18,7 @@ function ExpensesOverview() {
                     sum = Math.round(sum * 100) / 100;
                 }
             });
-            sums.push({ title: category.title, betrag: sum, id: category.id });
+            sums.push({ title: category.title, betrag: sum, id: category.id, icon: category.icon });
         });
         sums.sort((a, b) => a.betrag - b.betrag);
         setExpCatSums(sums);
@@ -33,8 +35,11 @@ function ExpensesOverview() {
                         <ul className="list-group mb-5">
                             {expCatSums.map((category) => (
                                 <li key={category.id} className="list-group-item d-flex justify-content-between align-items-center">
-                                    {category.title}
-                                    <span className="badge bg-primary rounded-pill">{category.betrag} €</span>
+                                    <span>
+                                        <i className={"bi bi-" + category.icon}></i>
+                                        <span className='mx-2'>{category.title}</span>
+                                    </span>
+                                    <span className="badge bg-primary rounded-pill ">{category.betrag} €</span>
                                 </li>
                             ))}
                         </ul>
