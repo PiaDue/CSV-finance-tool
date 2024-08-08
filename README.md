@@ -33,7 +33,7 @@
   - [x] icon-coded categories
   - [ ] change category manually (DropDown)
   - [x] calculate expenses for each category
-  - [ ] Visualize category data using charts TODO:
+  - [x] Visualize category data using charts
   - [ ] ability to add, change, delete categories (category name, keywords, icon)
 - [ ] flash message to undo change
 - [ ] clean up code, split up context, components
@@ -42,3 +42,4 @@
 - Frontend-only web app
 - TechStack: React (JS), Vite, Bootstrap
 - json-server to simulate backend
+- additionla libraries: react-icons, react-toastify, react-pdf, react-chartjs-2
