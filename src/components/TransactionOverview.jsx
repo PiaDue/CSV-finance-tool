@@ -7,7 +7,7 @@ import { pdf } from '@react-pdf/renderer'
 
 
 function TransactionOverview() {
-    const { showOverview, header, transactions, sums, monthYear } = useFile();
+    const { showOverview, header, transactions, sums, monthYear, expCategories } = useFile();
     const [showCol, setShowCol] = useState([]);
 
     useEffect(() => {
@@ -24,6 +24,17 @@ function TransactionOverview() {
 
     const handleCheckboxChange = (index) => {
         setShowCol(showCol.map((value, i) => i === index ? !value : value));
+    }
+
+    const catSum = (catTitle) => {
+        let sum = 0;
+        transactions.forEach(transaction => {
+            if (transaction.expCat && transaction.expCat.title === catTitle) {
+                sum += transaction.Betrag;
+            }
+
+        });
+        return sum.toFixed(2);
     }
 
     const generatePDF = async () => {
@@ -73,8 +84,26 @@ function TransactionOverview() {
                         onClick={generatePDF}>
                         <i className="bi bi-download me-1"></i> PDF
                     </button>
+
+                    {/*expenses overview*/}
+                    <h2 >Expenses Overview</h2>
+
+                    <div className="container">
+                        <div className="col-md-6">
+                            <ul className="list-group mb-5">
+                                {expCategories.map((category) => (
+                                    <li key={category.id} className="list-group-item d-flex justify-content-between align-items-center">
+                                        {category.title}
+                                        <span className="badge bg-primary rounded-pill">{catSum(category.title)} €</span>
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
+                    </div>
+
                 </>
-            )}
+            )
+            }
         </>
     );
 }

@@ -26,7 +26,7 @@ export const FileProvider = ({ children }) => {
             }
         };
 
-        const fetchExpenseCategories = async () => {
+        const fetchExpCategories = async () => {
             try {
                 const response = await axios.get('http://localhost:5001/expenseCategories');
                 setExpCategories(response.data);
@@ -36,7 +36,7 @@ export const FileProvider = ({ children }) => {
         }
 
         fetchGetBackKeywords();
-        fetchExpenseCategories();
+        fetchExpCategories();
     }, []);
 
     const saveGetBackKeywords = async (newKeywords) => {
@@ -256,7 +256,8 @@ export const FileProvider = ({ children }) => {
             sums,
             transactions,
             showOverview,
-            addTransaction
+            addTransaction,
+            expCategories
         }}>
             {children}
         </FileContext.Provider>

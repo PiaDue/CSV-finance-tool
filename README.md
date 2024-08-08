@@ -25,17 +25,18 @@
 **V2** 
 - [ ] upload File using Drag and drop
 - [x] add transactions manually
-- [ ] delete transactions manually (+ undo)
+- [ ] delete transactions (+ undo)
 - [x] ability to change keywords for getBack category
 - [x] persist data in local storage (json-server)
-- [ ] expense categories: Food, free time, subscriptions etc.
-  - [ ] icon-coded categories
-  - [ ] calculate expenses for each category
-  - [ ] Visualize category data using charts
-  - [ ] ability to add categories (category name, keywords, icon)
-  - [ ] ability to change categories
-  - [ ] ability to delete categories
+- [ ] expense categories: Groceries, Free Time, Subscriptions etc.
+  - [ ] KI Categorization  
+  - [x] icon-coded categories
+  - [ ] change category manually (DropDown)
+  - [x] calculate expenses for each category
+  - [ ] Visualize category data using charts TODO:
+  - [ ] ability to add, change, delete categories (category name, keywords, icon)
 - [ ] flash message to undo change
+- [ ] clean up code, split up context, components
 
 ## Tech
 - Frontend-only web app
