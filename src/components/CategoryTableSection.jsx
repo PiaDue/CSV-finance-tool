@@ -6,11 +6,12 @@ import { Button } from 'react-bootstrap';
 import AddTransactionModal from './AddTransactionModal';
 import '../styles/CategoryBoxStyles.scss';
 import Dropdown from 'react-bootstrap/Dropdown';
+import CategoryBox from './CategoryBox';
 
 
 function CategoryTableSection({ category, showCol }) {
 
-    const { header, sums, transactions, changeTransactionCategory } = useFile();
+    const { header, sums, transactions } = useFile();
 
     const categoryStyle = (cat) => {
         if (cat.includes("Income")) {
@@ -30,50 +31,6 @@ function CategoryTableSection({ category, showCol }) {
         } else if (cat.includes("GetBack")) {
             return "text-warning";
         }
-    }
-
-    //TODO: make this a separate component
-    const categoryBox = (transac) => {
-        const handleCategoryChange = (newCategory) => {
-            changeTransactionCategory(transac, newCategory);
-        };
-
-        // see styles/CategoryBoxStyles.scss
-        return (
-            <div className='d-flex justify-content-between align-items-center'>
-                <div>
-                    <Dropdown>
-                        <Dropdown.Toggle as={'div'} className={'d-inline-flex p-0'} id="category-dropdown" noCaret>
-                            <div className={`category-box ${transac.category.toLowerCase()}`}></div>
-                        </Dropdown.Toggle>
-                        <Dropdown.Menu>
-                            <Dropdown.Item className={'d-flex'} onClick={() => handleCategoryChange('GetBack')}>
-                                <div className={`category-box getback`}></div>
-                                <span>Get Back</span>
-                            </Dropdown.Item>
-                            <Dropdown.Item className={'d-flex'} onClick={() => handleCategoryChange('Income')}>
-                                <div className={`category-box income`}></div>
-                                <span>Income</span>
-                            </Dropdown.Item>
-                            <Dropdown.Item className={'d-flex'} onClick={() => handleCategoryChange('YouPay')}>
-                                <div className={`category-box youpay`}></div>
-                                <span>You Pay</span>
-                            </Dropdown.Item>
-                        </Dropdown.Menu>
-                    </Dropdown>
-                </div>
-                <div>
-                    {transac.category === "YouPay" && transac.expCat && (
-                        <div className="d-flex">
-                            <Button variant="light" size="sm" className="m-1">
-                                <i className={"bi bi-" + transac.expCat.icon}></i>
-                                {/** <span>{transac.expCat.title}</span> */}
-                            </Button>
-                        </div>
-                    )}
-                </div>
-            </div>
-        )
     }
 
     // Dynamically access the correct prop of sums based on the category
@@ -102,7 +59,9 @@ function CategoryTableSection({ category, showCol }) {
             {transactions.map((transaction, index) => (
                 transaction.category.includes(category) && (
                     <tr key={index}>
-                        <td key="category">{categoryBox(transaction)}</td>
+                        <td key="category">
+                            <CategoryBox transac={transaction} />
+                        </td>
                         {header.map((key, index) => (
                             showCol[index] && <td key={index}>{transaction[key]}</td>
                         ))}

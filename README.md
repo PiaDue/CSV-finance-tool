@@ -31,15 +31,36 @@
 - [ ] expense categories: Groceries, Free Time, Subscriptions etc.
   - [ ] KI Categorization  
   - [x] icon-coded categories
-  - [ ] change category manually (DropDown)
+  - [x] change category manually (DropDown)
   - [x] calculate expenses for each category
   - [x] Visualize category data using charts
   - [ ] ability to add, change, delete categories (category name, keywords, icon)
 - [ ] flash message to undo change
-- [ ] clean up code, split up context, components
+- [ ] clean up code, split up context, components (CategoryTableSection!!)
 
 ## Tech
 - Frontend-only web app
 - TechStack: React (JS), Vite, Bootstrap
 - json-server to simulate backend
 - additionla libraries: react-icons, react-toastify, react-pdf, react-chartjs-2
+
+## Notes
+transaction props:
+- Betrag -> float
+- Betrag (€) -> string
+- Buchungsdatum -> string
+- Gläubiger-ID
+- IBAN -> string
+- Kundenreferenz -> string
+- Mandatsreferenz -> string
+- Status -> string
+- Umsatztyp -> string
+- Verwendungszweck -> string
+- Wertstellung -> string (date)
+- Zahlungsempfänger*in -> string
+- Zahlungspflichtige*r -> string
+- category -> string (YouPay, GetBack, Income)
+- expCat -> object (optional)
+  - icon -> string
+  - id -> string
+  - title -> string

@@ -87,6 +87,13 @@ export const FileProvider = ({ children }) => {
         setTransactions(updatedTransactions);
     }
 
+    const changeExpenseCategory = (transaction, expCategoryTitle) => {
+        const expCat = expCategories.find(cat => cat.title === expCategoryTitle);
+        const updatedTransaction = { ...transaction, expCat };
+        const updatedTransactions = transactions.map(t => t === transaction ? updatedTransaction : t);
+        setTransactions(updatedTransactions);
+    };
+
     const changeShowOverview = (bool) => {
         setShowOverview(bool);
     }
@@ -248,6 +255,7 @@ export const FileProvider = ({ children }) => {
             analyzeData,
             changeShowOverview,
             changeTransactionCategory,
+            changeExpenseCategory,
             getBackKeywords,
             saveGetBackKeywords,
             parsedData,
