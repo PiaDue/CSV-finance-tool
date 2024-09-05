@@ -14,8 +14,11 @@ export const FileProvider = ({ children }) => {
     const [sums, setSums] = useState({ income: 0.0, youPay: 0.0, getBack: 0.0 });
     const [getBackKeywords, setGetBackKeywords] = useState([]);
     const [expCategories, setExpCategories] = useState([]);
+    let apiKey = "API_KEY";
 
     useEffect(() => {
+        console.log('API Key:', apiKey);
+
         // Fetch data form local JSON server
         const fetchGetBackKeywords = async () => {
             try {
@@ -35,8 +38,19 @@ export const FileProvider = ({ children }) => {
             }
         }
 
+        const fetchApiKey = async () => {
+            try {
+                const response = await axios.get('http://localhost:5001/api-key');
+                console.log('API Key:', response.data);
+                apiKey = response.data;
+            } catch (error) {
+                console.error('Error fetching API Key:', error);
+            }
+        }
+
         fetchGetBackKeywords();
         fetchExpCategories();
+        fetchApiKey();
     }, []);
 
     const saveGetBackKeywords = async (newKeywords) => {
@@ -220,8 +234,6 @@ export const FileProvider = ({ children }) => {
                     transaction.expCat = expCategories[randomIndex];
                 }
             }
-
-            //TODO: calculate sums for each expcat
         }
     }, [transactions]);
 
